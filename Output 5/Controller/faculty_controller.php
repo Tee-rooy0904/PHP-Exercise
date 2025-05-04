@@ -38,6 +38,10 @@ class FacultyController {
     public function getFaculties() {
         return $this->model->read();
     }
+
+    public function getFacultyById($id) {
+        return $this->model->getById($id);
+    }
 }
 
 // Initialize controller
@@ -74,9 +78,17 @@ if (isset($_GET['action'])) {
         header("Location: ../View/faculty_view.php");
         exit();
     }
-    // Add other actions here if needed
+    if ($_GET['action'] === 'edit' && isset($_GET['id'])) {
+        $faculty = $controller->getFacultyById($_GET['id']);
+        $faculties = $controller->getFaculties();
+        require_once('../View/faculty_view.php');
+        exit();
+    }
 }
 
-// Remove this line to prevent duplicate rendering
-// include('../View/faculty_view.php');
+// Only include view if directly accessing the controller
+if (basename($_SERVER['PHP_SELF']) === 'faculty_controller.php') {
+    header("Location: ../View/faculty_view.php");
+    exit();
+}
 ?>

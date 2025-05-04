@@ -1,6 +1,10 @@
 <?php
 session_start();
-require_once('../Controller/faculty_controller.php');
+if (!isset($faculties)) {
+    require_once('../Controller/faculty_controller.php');
+    $controller = new FacultyController($conn);
+    $faculties = $controller->getFaculties();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
